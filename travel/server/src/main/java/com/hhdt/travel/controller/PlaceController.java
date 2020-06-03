@@ -1,7 +1,7 @@
-package com.fake.travel.controller;
+package com.hhdt.travel.controller;
 
-import com.fake.travel.dto.PlaceDTO;
-import com.fake.travel.service.PlaceService;
+import com.hhdt.travel.dto.PlaceDTO;
+import com.hhdt.travel.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,4 +1,4 @@
-package com.fake.travel.entity;
+package com.hhdt.travel.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

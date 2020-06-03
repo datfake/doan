@@ -1,6 +1,6 @@
-package com.fake.travel.service;
+package com.hhdt.travel.service;
 
-import com.fake.travel.dto.PlaceDTO;
+import com.hhdt.travel.dto.PlaceDTO;
 import java.util.List;
 
 public interface PlaceService {

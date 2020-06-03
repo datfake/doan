@@ -1,4 +1,4 @@
-package com.fake.travel.entity;
+package com.hhdt.travel.entity;
 
 import javax.persistence.*;
 import java.util.Set;
