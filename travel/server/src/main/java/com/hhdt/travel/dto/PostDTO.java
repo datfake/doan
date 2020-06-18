@@ -1,6 +1,6 @@
-package com.fake.travel.dto;
+package com.hhdt.travel.dto;
 
-import com.fake.travel.entity.Comment;
+import com.hhdt.travel.entity.Comment;
 
 import java.util.List;
 import java.util.Set;

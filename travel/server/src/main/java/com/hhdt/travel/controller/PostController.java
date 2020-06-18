@@ -1,16 +1,16 @@
-package com.fake.travel.controller;
+package com.hhdt.travel.controller;
 
-import com.fake.travel.dto.PlaceDTO;
-import com.fake.travel.dto.PostDTO;
-import com.fake.travel.dto.PostOutputDTO;
-import com.fake.travel.entity.Place;
-import com.fake.travel.entity.Post;
-import com.fake.travel.entity.UserEntity;
-import com.fake.travel.mapper.PostMapper;
-import com.fake.travel.repository.PlaceRepository;
-import com.fake.travel.repository.PostRepository;
-import com.fake.travel.repository.UserRepository;
-import com.fake.travel.service.PostService;
+import com.hhdt.travel.dto.PlaceDTO;
+import com.hhdt.travel.dto.PostDTO;
+import com.hhdt.travel.dto.PostOutputDTO;
+import com.hhdt.travel.entity.Place;
+import com.hhdt.travel.entity.Post;
+import com.hhdt.travel.entity.UserEntity;
+import com.hhdt.travel.mapper.PostMapper;
+import com.hhdt.travel.repository.PlaceRepository;
+import com.hhdt.travel.repository.PostRepository;
+import com.hhdt.travel.repository.UserRepository;
+import com.hhdt.travel.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

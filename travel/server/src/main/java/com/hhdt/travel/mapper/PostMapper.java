@@ -1,7 +1,7 @@
-package com.fake.travel.mapper;
+package com.hhdt.travel.mapper;
 
-import com.fake.travel.dto.PostDTO;
-import com.fake.travel.entity.Post;
+import com.hhdt.travel.dto.PostDTO;
+import com.hhdt.travel.entity.Post;
 import org.springframework.stereotype.Component;
 
 @Component
