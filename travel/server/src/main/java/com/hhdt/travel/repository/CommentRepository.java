@@ -1,6 +1,6 @@
-package com.fake.travel.repository;
+package com.hhdt.travel.repository;
 
-import com.fake.travel.entity.Comment;
+import com.hhdt.travel.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

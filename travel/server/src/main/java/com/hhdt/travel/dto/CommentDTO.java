@@ -1,4 +1,4 @@
-package com.fake.travel.dto;
+package com.hhdt.travel.dto;
 
 import lombok.Data;
 

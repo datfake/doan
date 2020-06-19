@@ -1,8 +1,8 @@
-package com.fake.travel.mapper;
+package com.hhdt.travel.mapper;
 
 
-import com.fake.travel.dto.CommentDTO;
-import com.fake.travel.entity.Comment;
+import com.hhdt.travel.dto.CommentDTO;
+import com.hhdt.travel.entity.Comment;
 import org.springframework.stereotype.Component;
 
 @Component
