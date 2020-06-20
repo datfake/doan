@@ -6,7 +6,7 @@
     >
       <div id="formContent">
         <!-- Tabs Titles -->
-        <h2 class="inactive underlineHover cursor" >Sign In</h2>
+        <h2 class="inactive underlineHover cursor" v-on:click="moveLogin">Sign In</h2>
         <h2 class="active cursor">Sign Up</h2>
 
         <!-- Icon -->
@@ -39,7 +39,7 @@
           placeholder="Nhập mật khẩu"
           v-model="password"
         />
-        <button  class="fadeIn fourth btn-submit">ĐĂNG KÝ</button>
+        <button @click="submit" class="fadeIn fourth btn-submit">ĐĂNG KÝ</button>
 
         <!-- Remind Passowrd -->
       </div>
@@ -49,7 +49,29 @@
 
 <script>
 export default {
-}
+  name: "signup",
+  data() {
+    return {
+      email: "",
+      fullName: "",
+      password: ""
+    };
+  },
+  methods: {
+    moveLogin() {
+      this.$router.push("/login");
+    },
+    submit() {
+      this.$store.dispatch("auth/signup", {
+        infoSignup: {
+          email: this.email,
+          fullName: this.fullName,
+          password: this.password
+        }
+      });
+    }
+  }
+};
 </script>
 
 <style scoped>

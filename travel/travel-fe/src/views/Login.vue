@@ -47,7 +47,32 @@
 </template>
 
 <script>
-
+export default {
+  name: "login",
+  data() {
+    return {
+      email: "",
+      password: "",
+      userToken: JSON.parse(localStorage.getItem("user_token") || "{}") || {}
+    };
+  },
+  created: function() {
+    if (this.userToken.token) this.$router.push("/");
+  },
+  methods: {
+    moveSignup() {
+      this.$router.push("/signup");
+    },
+    submit() {
+      this.$store.dispatch("auth/login", {
+        infoLogin: {
+          email: this.email,
+          password: this.password
+        }
+      });
+    }
+  }
+};
 </script>
 
 <style scoped>
