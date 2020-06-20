@@ -32,7 +32,7 @@
                     <nav>
                       <ul id="navigation">
                         <li>
-                          <a >Trang Chủ</a>
+                          <a @click="home">Trang Chủ</a>
                         </li>
                         <li>
                           <a href="about.html">Địa điểm du lịch</a>
@@ -49,13 +49,20 @@
                                             </li>
                                             <li><a href="contact.html">Contact</a></li>
                         <li class="add-list"><a href="listing_details.html"><i class="ti-plus"></i> add Listing</a></li>-->
-
+                        <li class="login" v-if="getToken.token">
+                          <a href="#">
+                            <i class="ti-user"></i>
+                            {{getToken.fullName}}
+                          </a>
+                        </li>
                         <li class="login" v-else>
                           <a href="/login">
                             <i class="ti-user"></i>Đăng Nhập hoặc Đăng Ký
                           </a>
                         </li>
-                      
+                        <li class="login" v-if="getToken.token">
+                          <a href="/" @click="logout">Đăng Xuất</a>
+                        </li>
                       </ul>
                     </nav>
                   </div>
@@ -121,6 +128,32 @@
 
 <script>
 export default {
+  name: "header",
+  data() {
+    return {
+      userToken: {}
+    };
+  },
+  created: async function() {
+    await this.$store.dispatch("fetchToken");
+    this.userToken = this.$store.state.userToken;
+  },
+  methods: {
+    moveLogin() {
+      this.$router.push("/login");
+    },
+    logout() {
+      this.$store.dispatch("auth/logout");
+    },
+    home() {
+      this.$router.push("/");
+    }
+  },
+  computed: {
+    getToken() {
+      return JSON.parse(localStorage.getItem("user_token") || "{}") || {};
+    }
+  }
 };
 </script>
 
