@@ -1,31 +1,35 @@
 package com.hhdt.travel.dto;
 
-import com.hhdt.travel.entity.Comment;
-
 import java.util.List;
 
 public class PostOutputDTO {
     private Long id;
 
+    private String name;
+
+    private String address;
+
     private String content;
 
     private String userName;
 
-    private String image;
+    private byte[] image;
 
     private List<CommentOutputDTO> commentOutputDTOS;
 
     public PostOutputDTO() {
     }
 
-    public PostOutputDTO(Long id, String content, String userName, String image) {
+    public PostOutputDTO(Long id, String name, String address, String content, String userName, byte[] image) {
         this.id = id;
+        this.name = name;
+        this.address = address;
         this.content = content;
         this.userName = userName;
         this.image = image;
     }
 
-    public PostOutputDTO(Long id, String content, String userName, String image, List<CommentOutputDTO> commentOutputDTOS) {
+    public PostOutputDTO(Long id, String content, String userName, byte[] image, List<CommentOutputDTO> commentOutputDTOS) {
         this.id = id;
         this.content = content;
         this.userName = userName;
@@ -57,11 +61,11 @@ public class PostOutputDTO {
         this.userName = userName;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
@@ -71,5 +75,21 @@ public class PostOutputDTO {
 
     public void setCommentOutputDTOS(List<CommentOutputDTO> commentOutputDTOS) {
         this.commentOutputDTOS = commentOutputDTOS;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

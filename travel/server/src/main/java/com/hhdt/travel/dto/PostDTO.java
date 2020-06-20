@@ -3,7 +3,6 @@ package com.hhdt.travel.dto;
 import com.hhdt.travel.entity.Comment;
 
 import java.util.List;
-import java.util.Set;
 
 public class PostDTO {
 

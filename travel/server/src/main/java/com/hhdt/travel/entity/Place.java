@@ -1,6 +1,7 @@
 package com.hhdt.travel.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -18,11 +19,15 @@ public class Place {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column
     private String image;
 
-    @Column(nullable = false,length = 3000)
-    private String Content;
+    @Column
+    private String content;
+
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image img;
 
     @ManyToOne
     @JoinColumn(name = "id_province")
