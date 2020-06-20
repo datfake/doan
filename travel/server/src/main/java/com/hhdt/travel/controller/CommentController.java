@@ -1,8 +1,8 @@
-package com.fake.travel.controller;
+package com.hhdt.travel.controller;
 
-import com.fake.travel.dto.CommentDTO;
-import com.fake.travel.dto.CommentOutputDTO;
-import com.fake.travel.service.CommentService;
+import com.hhdt.travel.dto.CommentDTO;
+import com.hhdt.travel.dto.CommentOutputDTO;
+import com.hhdt.travel.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

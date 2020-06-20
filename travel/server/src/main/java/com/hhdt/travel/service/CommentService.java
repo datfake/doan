@@ -1,7 +1,7 @@
-package com.fake.travel.service;
+package com.hhdt.travel.service;
 
-import com.fake.travel.dto.CommentDTO;
-import com.fake.travel.dto.CommentOutputDTO;
+import com.hhdt.travel.dto.CommentDTO;
+import com.hhdt.travel.dto.CommentOutputDTO;
 
 import java.util.List;
 
