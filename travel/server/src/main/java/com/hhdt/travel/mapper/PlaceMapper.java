@@ -14,6 +14,13 @@ public class PlaceMapper {
         placeDTO.setName(place.getName());
         placeDTO.setImage(place.getImage());
         placeDTO.setIdProvince(place.getProvince().getId());
+        try {
+            placeDTO.setIdImage(place.getImg().getData());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         return placeDTO;
     }
 

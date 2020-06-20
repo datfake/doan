@@ -3,18 +3,16 @@ package com.hhdt.travel.dto;
 import lombok.Data;
 
 @Data
-public class PlaceDTO {
+public class PlaceInputDTO {
     private long id;
 
     private String address;
 
     private String name;
 
-    private String image;
-
-    private String content;
+    private String Content;
 
     private long idProvince;
 
-    private byte[] idImage;
+    private long idImage;
 }
