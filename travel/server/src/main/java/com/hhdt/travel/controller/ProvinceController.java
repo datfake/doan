@@ -1,7 +1,7 @@
 package com.hhdt.travel.controller;
 
-import com.fake.travel.entity.Province;
-import com.fake.travel.repository.ProvinceRepository;
+import com.hhdt.travel.entity.Province;
+import com.hhdt.travel.repository.ProvinceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

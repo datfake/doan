@@ -15,6 +15,8 @@ import com.hhdt.travel.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,12 +50,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostOutputDTO> getAllPost() {
-        List<Object[]> objects = postRepository.getAllPost();
-        List<PostOutputDTO> postOutputDTOS = new ArrayList<>();
-        for(Object[] object : objects)
+        List<PostOutputDTO> postOutputDTOS = postRepository.getAllPost();
+        for(PostOutputDTO postOutputDTO : postOutputDTOS)
         {
-            List<CommentOutputDTO> commentOutputDTOS = commentService.getListCommentByIdPost(Long.valueOf(object[0].toString()));
-            postOutputDTOS.add(new PostOutputDTO(Long.valueOf(object[0].toString()),object[1].toString(),object[3].toString(),object[2].toString(),commentOutputDTOS));
+            List<CommentOutputDTO> commentOutputDTOS = commentService.getListCommentByIdPost(postOutputDTO.getId());
+            postOutputDTO.setCommentOutputDTOS(commentOutputDTOS);
         }
         return postOutputDTOS;
     }
