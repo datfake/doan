@@ -1,4 +1,4 @@
-# travel-fe
+# travel
 
 ## Project setup
 ```

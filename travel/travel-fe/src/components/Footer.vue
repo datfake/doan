@@ -36,7 +36,7 @@
                         <a href="#">Thúy Hiền</a>
                       </li>
                       <li>
-                        <a href="#">Đức Tân</a>
+                        <a href="#">Tân Tân</a>
                       </li>
                     </ul>
                   </div>

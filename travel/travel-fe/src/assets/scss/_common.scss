@@ -266,24 +266,6 @@ hr {
 		overflow: hidden;
 		margin:0;
 
-	&::before{
-		content: "";
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 101%;
-		height: 101%;
-		background:#f32a48;
-		z-index: 1;
-		border-radius: 5px;
-		transition: transform 0.5s;
-		transition-timing-function: ease;
-		transform-origin: 0 0;
-		transition-timing-function: cubic-bezier(0.5,1.6,0.4,0.7);
-		// 
-		transform: scaleX(0);
-		border-radius: 0;
-	}
 }
 .btn:hover::before {
 	transform: scaleX(1);

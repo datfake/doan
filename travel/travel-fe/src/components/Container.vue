@@ -16,16 +16,19 @@
           <div class="row">
             <div
               class="col-lg-4 col-md-6 col-sm-6"
+              v-for="place in listPlaces"
+              v-bind:key="place.id"
             >
               <div class="single-location mb-30">
                 <div class="location-img">
-                  
+                  <!-- <img v-bind:src="require('../assets/img/gallery/' + place.image)" /> -->
+                  <img v-bind:src="'data:image/jpeg;base64,'+place.idImage" />
                 </div>
                 <div class="location-details">
-                  
+                  <p>{{place.name}}</p>
                   <a href="#" class="location-btn">
                     <i class="ti-plus"></i>
-                    
+                    {{place.address}}
                   </a>
                 </div>
               </div>
@@ -48,8 +51,10 @@
                     </label>
                     <select id="select-box1" class="select" @change="onChange()" v-model="selected">
                       <option
-                       
-                      
+                        v-for="place in listPlaces"
+                        v-bind:key="place.id"
+                        v-bind:value="{ id: place.id, name: place.name , address: place.address}"
+                      >{{place.name}} -- {{place.address}}</option>
                     </select>
                   </div>
                   <div>
@@ -61,10 +66,10 @@
                       max-rows="10"
                     ></textarea>
                   </div>
-                  <a href="#"  class="action-button shadow animate blue">Review</a>
+                  <a href="#" @click="review" class="action-button shadow animate blue">Review</a>
                 </div>
                 <hr />
-                <div class="container_post-list" >
+                <div class="container_post-list" v-for="post in listPosts" v-bind:key="post.id">
                   <div class="user-writepost">
                     <a href class="avatar">
                       <img
@@ -72,20 +77,29 @@
                         :src="require('../assets/img/gallery/avatar.jpg')"
                         alt
                       />
-                    </a>             
+                    </a>
+                    <span class="user_post">{{post.userName}}</span>
+                  </div>
+                  <p class="post-content">{{post.content}}</p>
                   <div class="img_post-content">
+                    <!-- <img v-bind:src="require('../assets/img/gallery/' + post.image)" alt /> -->
+                    <img v-bind:src="'data:image/jpeg;base64,'+post.image" />
                   </div>
                   <div class="post-commment">
                     <textarea name="comment" v-model="textComment" class="form-control" rows="2"></textarea>
-                    <button  class="btn-comment">Bình Luận</button>
+                    <button @click="sendComment(post.id)" class="btn-comment">Bình Luận</button>
                     <ul
                       class="comments"
+                      v-for="item in post.commentOutputDTOS"
+                      v-bind:key="item.id"
                     >
                       <li class="clearfix">
                         <img src="https://bootdey.com/img/Content/user_1.jpg" class="avatar" alt />
                         <div class="post-comments">
                           <p class="meta">
+                            <a href="#" class="user-comment">{{item.userName}}</a>
                           </p>
+                          <p class="conent-comment">{{item.content}}</p>
                         </div>
                       </li>
                     </ul>
@@ -107,7 +121,58 @@
 
 <script>
 export default {
-}
+  name: "container",
+  data() {
+    return {
+      listPlaces: [],
+      listPosts: [],
+      idUser: JSON.parse(localStorage.getItem("user_token") || "{}").id,
+      idPlace: 0,
+      title: "Chọn địa điểm bạn muốn rì viu",
+      selected: {},
+      content: "",
+      textComment: ""
+    };
+  },
+  async created() {
+    await this.$store.dispatch("fetchToken");
+    this.userToken = this.$store.state.userToken;
+    await this.$store.dispatch("getAllPlaces");
+    this.listPlaces = this.$store.state.places;
+    await this.$store.dispatch("getAllPosts");
+    this.listPosts = this.$store.state.posts;
+  },
+  computed: {
+    getToken() {
+      return JSON.parse(localStorage.getItem("user_token") || "{}") || {};
+    }
+  },
+  methods: {
+    onChange() {
+      this.title = this.selected.name + " -- " + this.selected.address;
+      this.idPlace = this.selected.id;
+    },
+    review() {
+      this.$store.dispatch("review", {
+        post: {
+          content: this.content,
+          idUser: this.idUser,
+          idPlace: this.idPlace
+        }
+      });
+    },
+    sendComment(value) {
+      this.$store.dispatch("comment", {
+        comment: {
+          content: this.textComment,
+          idUser: this.idUser,
+          idPost: value
+        }
+      }).then( response => ( this.$router.push("/admin")))
+       
+    }
+  }
+};
 </script>
 
 <style scoped>
@@ -267,10 +332,15 @@ label.label.select-box1 {
   text-decoration: none;
 }
 
+
 .blue {
   background-color: #3498db;
   border-bottom: 5px solid #2980b9;
   text-shadow: 0px -2px #2980b9;
+}
+
+button.btn-comment:hover {
+    background-color: #2417ea;
 }
 
 .action-button:active {
