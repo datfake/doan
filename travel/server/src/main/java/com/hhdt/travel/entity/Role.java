@@ -62,4 +62,6 @@ public class Role {
     public void setUsers(Set<UserEntity> users) {
         this.users = users;
     }
+
+
 }

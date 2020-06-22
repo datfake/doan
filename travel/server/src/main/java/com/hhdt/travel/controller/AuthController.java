@@ -46,7 +46,8 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = jwtTokenUtil.generateToken(authentication);
         UserEntity userEntity = userRepository.findByEmail(loginDTO.getEmail()).get();
-        return ResponseEntity.ok(new AuthTokenDTO(userEntity.getId(),loginDTO.getEmail(),userEntity.getFullName(),token));
+        long roleid = userEntity.getRoles().size()>1 ?2:1;
+        return ResponseEntity.ok(new AuthTokenDTO(userEntity.getId(),loginDTO.getEmail(),userEntity.getFullName(),token,roleid));
     }
 
     @PostMapping("/register")

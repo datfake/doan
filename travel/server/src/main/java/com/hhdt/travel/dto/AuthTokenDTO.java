@@ -12,4 +12,5 @@ public class AuthTokenDTO {
     private String email;
     private String fullName;
     private String token;
+    private long roleid;
 }

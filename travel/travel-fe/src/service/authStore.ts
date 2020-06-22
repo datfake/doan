@@ -48,8 +48,8 @@ export const authStore = {
             "Bearer " + result.data.token;
           router.push("/");
         })
-        .catch((err) => {
-          alert(err);
+        .catch(() => {
+          alert("Sai tài khoản hoặc mật khẩu");
         });
     },
     signup: async ({ commit }, { infoSignup }) => {

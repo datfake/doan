@@ -31,6 +31,11 @@
                   <div class="main-menu f-right d-none d-lg-block">
                     <nav>
                       <ul id="navigation">
+                        <li class="login" v-if="getToken.roleid==2">
+                          <a @click="admin">
+                            Quản Trị
+                          </a>
+                        </li>
                         <li>
                           <a @click="home">Trang Chủ</a>
                         </li>
@@ -147,6 +152,9 @@ export default {
     },
     home() {
       this.$router.push("/");
+    },
+    admin() {
+      this.$router.push("/admin")
     }
   },
   computed: {
