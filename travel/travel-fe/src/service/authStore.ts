@@ -60,10 +60,14 @@ export const authStore = {
           password: infoSignup.password,
         })
         .then((result) => {
-          router.push("/login");
+          if (result.data == "") alert("Email đã tồn tại");
+          else {
+            alert(result.data);
+            router.push("/login");
+          }
         })
         .catch((err) => {
-          alert(err);
+          alert("hệ thống đang bảo trì!");
         });
     },
   },

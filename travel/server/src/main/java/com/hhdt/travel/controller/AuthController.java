@@ -51,13 +51,17 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public void register(@RequestBody RegisterDTO registerDTO) {
-        UserEntity user = new UserEntity(registerDTO.getEmail(), registerDTO.getFullName(), new BCryptPasswordEncoder().encode(registerDTO.getPassword()));
-        Role role = roleRepository.findById(2);
-        Set<Role> roles = new HashSet<>();
-        roles.add(role);
-        user.setRoles(roles);
-        userRepository.save(user);
+    public String register(@RequestBody RegisterDTO registerDTO) {
+        if(userRepository.findByEmail(registerDTO.getEmail()).isPresent()) return null;
+        else {
+            UserEntity user = new UserEntity(registerDTO.getEmail(), registerDTO.getFullName(), new BCryptPasswordEncoder().encode(registerDTO.getPassword()));
+            Role role = roleRepository.findById(2);
+            Set<Role> roles = new HashSet<>();
+            roles.add(role);
+            user.setRoles(roles);
+            userRepository.save(user);
+            return "Đăng ký thành công";
+        }
     }
 
     @PostMapping("/register-admin")
