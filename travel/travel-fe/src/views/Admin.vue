@@ -178,7 +178,7 @@ export default {
     },
     async xoa() {
       if (this.checked.length <= 0) {
-        alert("Vui lòng chọn chương để xóa!");
+        alert("Vui lòng chọn địa điểm để xóa!");
       } else if (confirm("Bạn có chắc muốn xóa địa điểm này?")) {
         const res = await this.$store
           .dispatch("deleteplace", {
@@ -188,6 +188,9 @@ export default {
             alert("Xóa thành công !!");
           });
       }
+    },
+    check(event) {
+      this.checked.push(event.target.value);
     }
   }
 };

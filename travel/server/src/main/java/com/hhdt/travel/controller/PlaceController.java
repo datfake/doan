@@ -10,6 +10,7 @@ import com.hhdt.travel.repository.PlaceRepository;
 import com.hhdt.travel.repository.ProvinceRepository;
 import com.hhdt.travel.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,6 +39,7 @@ public class PlaceController {
         return placeService.getAllPlaces();
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("/uploadImage")
     public long uploadImage(@RequestBody MultipartFile file) throws IOException
     {

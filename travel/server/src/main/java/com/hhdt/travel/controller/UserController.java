@@ -7,6 +7,7 @@ import com.hhdt.travel.mapper.UserMapper;
 import com.hhdt.travel.repository.UserRepository;
 import com.hhdt.travel.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class UserController {
         return registerDTOS;
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/del")
     public String delete(@RequestBody long[] ids)
     {

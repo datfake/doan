@@ -32,9 +32,7 @@
                     <nav>
                       <ul id="navigation">
                         <li class="login" v-if="getToken.roleid==2">
-                          <a @click="admin">
-                            Quản Trị
-                          </a>
+                          <a @click="admin">Quản Trị</a>
                         </li>
                         <li>
                           <a @click="home">Trang Chủ</a>
@@ -101,11 +99,11 @@
                   <!-- <h1>Discover Great Places</h1> -->
                 </div>
                 <!--Hero form -->
-                <form action="#" class="search-box">
+                <!-- <form action="#" class="search-box">
                   <div class="input-form">
                     <input type="text" placeholder="Bạn muốn tìm kiếm gì?" />
                   </div>
-                  <!-- <div class="select-form">
+                  <div class="select-form">
                                     <div class="select-itms">
                                         <select name="select" id="select1">
                                             <option value="">All Catagories</option>
@@ -115,11 +113,11 @@
                                             <option value="">Catagories Four</option>
                                         </select>
                                     </div>
-                  </div>-->
+                  </div>
                   <div class="search-form">
                     <a href="#">Tìm Kiếm</a>
                   </div>
-                </form>
+                </form>-->
               </div>
             </div>
           </div>
@@ -148,13 +146,14 @@ export default {
       this.$router.push("/login");
     },
     logout() {
+      confirm("Bạn có chắc muốn đăng xuất?");
       this.$store.dispatch("auth/logout");
     },
     home() {
       this.$router.push("/");
     },
     admin() {
-      this.$router.push("/admin")
+      this.$router.push("/admin");
     }
   },
   computed: {
