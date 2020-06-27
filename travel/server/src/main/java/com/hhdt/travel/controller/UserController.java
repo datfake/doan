@@ -1,14 +1,13 @@
 package com.hhdt.travel.controller;
 
 import com.hhdt.travel.dto.RegisterDTO;
+import com.hhdt.travel.dto.UserDTO;
 import com.hhdt.travel.entity.UserEntity;
 import com.hhdt.travel.mapper.UserMapper;
 import com.hhdt.travel.repository.UserRepository;
 import com.hhdt.travel.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +19,28 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private UserRepository userRepository;
     @GetMapping
-    public List<RegisterDTO> getAllUsers()
+    public List<UserDTO> getAllUsers()
     {
         List<UserEntity> userEntities = userService.getALlUsers();
-        List<RegisterDTO> registerDTOS = new ArrayList<>();
+        List<UserDTO> registerDTOS = new ArrayList<>();
         for(UserEntity userEntity : userEntities)
         {
-            registerDTOS.add(userMapper.toDto(userEntity));
+            registerDTOS.add(userMapper.toDtoo(userEntity));
         }
         return registerDTOS;
     }
+
+    @DeleteMapping("/del")
+    public String delete(@RequestBody long[] ids)
+    {
+        for(long id : ids)
+        {
+            userRepository.deleteById(id);
+        }
+        return "xóa thành công";
+    }
+
 }

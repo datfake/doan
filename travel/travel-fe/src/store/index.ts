@@ -2,8 +2,6 @@ import { authStore } from "@/service/authStore";
 import axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
-import VueAxios from "vue-axios";
-
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -13,10 +11,10 @@ export default new Vuex.Store({
     postCurrent: {},
     commentCurrent: {},
     posts: [],
-    user:[],
+    user: [],
     provinces: [],
-    saveplace:[],
-    saveimage: null
+    saveplace: [],
+    saveimage: null,
   },
   mutations: {
     places(state, places) {
@@ -46,18 +44,31 @@ export default new Vuex.Store({
   },
   actions: {
     async getAllPlaces({ commit }) {
-      await axios.get("http://localhost:8022/api/place").then((res) => {
-        commit("places", res.data);
-      });
-    },
-
-    review: async ({ commit }, { post }) => {
       await axios
-        .post(`http://localhost:8022/api/post/create`, {
-          content: post.content,
-          idUser: post.idUser,
-          idPlace: post.idPlace,
+        .get("http://localhost:8022/api/place", {
+          headers: {
+            Authorization: "Bearer " + this.state.userToken.token,
+          },
         })
+        .then((res) => {
+          commit("places", res.data);
+        });
+    },
+    async review({ commit }, { post }) {
+      await axios
+        .post(
+          `http://localhost:8022/api/post/create`,
+          {
+            content: post.content,
+            idUser: post.idUser,
+            idPlace: post.idPlace,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + this.state.userToken.token,
+            },
+          }
+        )
         .then((result) => {
           commit("review", result.data);
         })
@@ -65,13 +76,21 @@ export default new Vuex.Store({
           alert(err);
         });
     },
-    comment: async ({ commit }, { comment }) => {
+    async comment({ commit }, { comment }) {
       await axios
-        .post(`http://localhost:8022/api/comment/create`, {
-          content: comment.content,
-          idUser: comment.idUser,
-          idPost: comment.idPost,
-        })
+        .post(
+          `http://localhost:8022/api/comment/create`,
+          {
+            content: comment.content,
+            idUser: comment.idUser,
+            idPost: comment.idPost,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + this.state.userToken.token,
+            },
+          }
+        )
         .then((result) => {
           commit("comment", result.data);
         })
@@ -79,16 +98,23 @@ export default new Vuex.Store({
           alert(err);
         });
     },
-    savePlace: async ({ commit }, { place }) => {
+    async savePlace({ commit }, { place }) {
       await axios
-        .post(`http://localhost:8022/api/place/create`, 
-        {
-         name: place.name,
-         address:place.address,
-         content:place.content,
-         idProvince:place.idProvince,
-         idImage:place.idImage
-        })
+        .post(
+          `http://localhost:8022/api/place/create`,
+          {
+            name: place.name,
+            address: place.address,
+            content: place.content,
+            idProvince: place.idProvince,
+            idImage: place.idImage,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + this.state.userToken.token,
+            },
+          }
+        )
         .then((result) => {
           commit("saveplace", result.data);
         })
@@ -96,14 +122,13 @@ export default new Vuex.Store({
           alert(err);
         });
     },
-    saveImage: async ({ commit }, { formData }) => {
+    async saveImage({ commit }, { formData }) {
       await axios
-        .post(`http://localhost:8022/api/place/uploadImage`, 
-        formData,
-        {
+        .post(`http://localhost:8022/api/place/uploadImage`, formData, {
           headers: {
-              'Content-Type': 'multipart/form-data'
-          }
+            "Content-Type": "multipart/form-data",
+            Authorization: "Bearer " + this.state.userToken.token,
+          },
         })
         .then((result) => {
           commit("saveimage", result.data);
@@ -113,26 +138,60 @@ export default new Vuex.Store({
         });
     },
     async getAllPosts({ commit }) {
-      await axios.get("http://localhost:8022/api/post").then((res) => {
-        commit("posts", res.data);
-      });
+      await axios
+        .get("http://localhost:8022/api/post", {
+          headers: {
+            Authorization: "Bearer " + this.state.userToken.token,
+          },
+        })
+        .then((res) => {
+          commit("posts", res.data);
+        });
     },
     async getAllProvince({ commit }) {
-      await axios.get("http://localhost:8022/api/province").then((res) => {
-        commit("province", res.data);
-      });
+      await axios
+        .get("http://localhost:8022/api/province", {
+          headers: {
+            Authorization: "Bearer " + this.state.userToken.token,
+          },
+        })
+        .then((res) => {
+          commit("province", res.data);
+        });
     },
     async getAllUsers({ commit }) {
-      await axios.get("http://localhost:8022/api/user").then((res) => {
-        commit("user", res.data);
-      });
+      await axios
+        .get("http://localhost:8022/api/user", {
+          headers: {
+            Authorization: "Bearer " + this.state.userToken.token,
+          },
+        })
+        .then((res) => {
+          commit("user", res.data);
+        });
     },
-    async deleteplace({ commit }, {data}) {
-      await axios.delete("http://localhost:8022/api/place/del",data).then((res) => {
-        return res.data;
-      });
+    async deleteplace({ commit }, { data }) {
+      await axios
+        .delete("http://localhost:8022/api/place/del", { data: data.ids })
+        .then((res) => {
+          return res.data;
+        });
     },
-    
+    async deleteuser({ commit }, { data }) {
+      console.log(data.ids, 444);
+      await axios
+        .delete("http://localhost:8022/api/user/del", { data: data.ids })
+        .then((res) => {
+          return res.data;
+        });
+    },
+    async deletepost({ commit }, { data }) {
+      await axios
+        .delete("http://localhost:8022/api/post/del", { data: data.ids })
+        .then((res) => {
+          return res.data;
+        });
+    },
   },
   modules: {
     auth: authStore,

@@ -51,15 +51,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .antMatchers("/api/auth").permitAll()
                 .antMatchers("/api/auth/register").permitAll()
                 .antMatchers("/api/auth/register-admin").permitAll()
-                .antMatchers("/api/place").permitAll()
                 .antMatchers("/api/place/del").permitAll()
-                .antMatchers("/api/province").permitAll()
-                .antMatchers("/api/post/create").permitAll()
-                .antMatchers("/api/post").permitAll()
-                .antMatchers("/api/user").permitAll()
-                .antMatchers("/api/comment/create").permitAll()
-                .antMatchers("/api/place/create").permitAll()
-                .antMatchers("/api/place/uploadImage").permitAll()
+                .antMatchers("/api/post/del").permitAll()
+                .antMatchers("/api/user/del").permitAll()
                 .anyRequest()
                 .authenticated();
 
