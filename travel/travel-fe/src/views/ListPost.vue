@@ -70,43 +70,36 @@
             <li class="item item-name">Tên</li>
             <li class="item item-add">Địa chỉ</li>
             <li class="item item-img">image</li>
-          </ul> -->
+          </ul>-->
           <button type="button" class="btn btn-primary" @click="them">Thêm mới</button>
-          <button v-bind:style="{ marginLeft: '30px'}" type="button" class="btn btn-danger">Xoá</button>
-           <table v-bind:style="{ marginTop: '30px'}" id="coquanlist" className="table table-striped">
-              <thead>
-                <tr>
-                  <th v-bind:style="{ width: '10%'}" className="w-checkbox">
-                    <input type="checkbox" />
-                  </th>
-                  <th v-bind:style="{ width: '40%' }"  className="w-stt">
-                    Địa điểm
-                  </th>
-                  <th v-bind:style="{ width: '25%' }" className="w-stt">
-                    Địa chỉ
-                  </th>
-                  <th v-bind:style="{ width: '80%' }"  className="w-stt">
-                    Nội dung
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                  <tr  v-for="item in listPosts" v-bind:key="item.id">
-                    <td  className="w-checkbox">
-                      <input type="checkbox" />
-                    </td>
-                    <td >
-                      {{item.name}}
-                    </td>
-                    <td >
-                      {{item.address}}
-                    </td>
-                    <td >
-                     {{item.content}}
-                    </td>
-                  </tr>
-              </tbody>
-            </table>
+          <button
+            v-bind:style="{ marginLeft: '30px'}"
+            type="button"
+            class="btn btn-danger"
+            @click="xoa"
+          >Xoá</button>
+          <table v-bind:style="{ marginTop: '30px'}" id="coquanlist" class="table table-striped">
+            <thead>
+              <tr>
+                <th v-bind:style="{ width: '10%'}" class="w-checkbox">
+                  <input type="checkbox" />
+                </th>
+                <th v-bind:style="{ width: '40%' }" class="w-stt">Địa điểm</th>
+                <th v-bind:style="{ width: '25%' }" class="w-stt">Địa chỉ</th>
+                <th v-bind:style="{ width: '80%' }" class="w-stt">Nội dung</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in listPosts" v-bind:key="item.id">
+                <td class="w-checkbox">
+                  <input type="checkbox" :value="item.id" @change="check($event)" :id="item.id" />
+                </td>
+                <td>{{item.name}}</td>
+                <td>{{item.address}}</td>
+                <td>{{item.content}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <!-- /.container-fluid -->
 
@@ -158,6 +151,7 @@ export default {
   data() {
     return {
       listPosts: [],
+      checked: []
     };
   },
   async created() {
@@ -165,17 +159,28 @@ export default {
     this.listPosts = this.$store.state.posts;
   },
   methods: {
-    them(){
-      this.$router.push('/createpost')
+    them() {
+      this.$router.push("/createpost");
     },
-    place(){
-      this.$router.push('/admin')
+    place() {
+      this.$router.push("/admin");
     },
-    user(){
-      this.$router.push('/listuser')
+    user() {
+      this.$router.push("/listuser");
     },
-    post(){
-      this.$router.push('/listpost')
+    post() {
+      this.$router.push("/listpost");
+    },
+    async xoa() {
+      if (this.checked.length <= 0) {
+        alert("Vui lòng chọn bài viết để xóa!");
+      } else if (confirm("Bạn có chắc muốn xóa bài viết này?")) {
+        const res = await this.$store.dispatch("deletepost", {
+          data: {ids:this.checked}
+        }).then(()=>{
+           alert("Xóa thành công !!");
+        });
+      }
     }
   }
 };

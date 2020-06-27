@@ -70,46 +70,36 @@
             <li class="item item-name">Tên</li>
             <li class="item item-add">Địa chỉ</li>
             <li class="item item-img">image</li>
-          </ul> -->
+          </ul>-->
           <button type="button" class="btn btn-primary" @click="them">Thêm mới</button>
-          <button v-bind:style="{ marginLeft: '30px'}" type="button" class="btn btn-danger" @click="xoa">Xoá</button>
-           <table v-bind:style="{ marginTop: '30px'}" id="coquanlist" className="table table-striped">
-              <thead>
-                <tr>
-                  <th v-bind:style="{ width: '10%'}" className="w-checkbox">
-                    <input type="checkbox" />
-                  </th>
-                  <th v-bind:style="{ width: '20%' }"  className="w-stt">
-                    Tên
-                  </th>
-                  <th v-bind:style="{ width: '25%' }" className="w-stt">
-                    Địa chỉ
-                  </th>
-                  <th v-bind:style="{ width: '80%' }"  className="w-stt">
-                    Mô tả
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                  <tr  v-for="item in listPlaces" v-bind:key="item.id">
-                    <td  className="w-checkbox">
-                      <input type="checkbox" 
-                      :value="item.id"
-                      v-model="checked"
-                      />
-                    </td>
-                    <td >
-                      {{item.name}}
-                    </td>
-                    <td >
-                      {{item.address}}
-                    </td>
-                    <td >
-                     {{item.content}}
-                    </td>
-                  </tr>
-              </tbody>
-            </table>
+          <button
+            v-bind:style="{ marginLeft: '30px'}"
+            type="button"
+            class="btn btn-danger"
+            @click="xoa"
+          >Xoá</button>
+          <table v-bind:style="{ marginTop: '30px'}" id="coquanlist" class="table table-striped">
+            <thead>
+              <tr>
+                <th v-bind:style="{ width: '10%'}" class="w-checkbox">
+                  <input type="checkbox" />
+                </th>
+                <th v-bind:style="{ width: '20%' }" class="w-stt">Tên</th>
+                <th v-bind:style="{ width: '25%' }" class="w-stt">Địa chỉ</th>
+                <th v-bind:style="{ width: '80%' }" class="w-stt">Mô tả</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in listPlaces" v-bind:key="item.id">
+                <td class="w-checkbox">
+                  <input type="checkbox" :value="item.id" @change="check($event)" :id="item.id" />
+                </td>
+                <td>{{item.name}}</td>
+                <td>{{item.address}}</td>
+                <td>{{item.content}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <!-- /.container-fluid -->
 
@@ -141,10 +131,8 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div
-            class="modal-body"
-          >Bạn có muốn đăng xuất không.</div>
-          <div class="">
+          <div class="modal-body">Bạn có muốn đăng xuất không.</div>
+          <div class>
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             <a class="btn btn-primary" @click="logout">Logout</a>
           </div>
@@ -161,7 +149,7 @@ export default {
   data() {
     return {
       listPlaces: [],
-      checked:[]
+      checked: []
     };
   },
   async created() {
@@ -174,31 +162,31 @@ export default {
       this.$router.push("/login");
     },
     home() {
-      this.$router.push("/")
+      this.$router.push("/");
     },
-    them(){
-      this.$router.push('/createplace')
+    them() {
+      this.$router.push("/createplace");
     },
-    place(){
-      this.$router.push('/admin')
+    place() {
+      this.$router.push("/admin");
     },
-    user(){
-      this.$router.push('/listuser')
+    user() {
+      this.$router.push("/listuser");
     },
-    post(){
-      this.$router.push('/listpost')
+    post() {
+      this.$router.push("/listpost");
     },
-    async xoa()
-    {
+    async xoa() {
       if (this.checked.length <= 0) {
-        alert('Vui lòng chọn chương để xóa!')
-      } else if (confirm('Bạn có chắc muốn xóa địa điểm này?')) {
-        const res = await this.$store.dispatch("deleteplace",this.checked)
-        if (typeof res === 'string') {
-          alert(res)
-        } else {     
-          alert('Có lỗi xảy ra !!')
-        }
+        alert("Vui lòng chọn chương để xóa!");
+      } else if (confirm("Bạn có chắc muốn xóa địa điểm này?")) {
+        const res = await this.$store
+          .dispatch("deleteplace", {
+            data: { ids: this.checked }
+          })
+          .then(() => {
+            alert("Xóa thành công !!");
+          });
       }
     }
   }

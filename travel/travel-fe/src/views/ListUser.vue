@@ -44,7 +44,7 @@
     <div id="wrapper">
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
-        <li class="nav-item ">
+        <li class="nav-item">
           <a class="nav-link" @click="place">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Quản Lý Địa Điểm Du Lịch</span>
@@ -70,36 +70,33 @@
             <li class="item item-name">Tên</li>
             <li class="item item-add">Địa chỉ</li>
             <li class="item item-img">image</li>
-          </ul> -->
-          <button v-bind:style="{ marginLeft: '30px'}" type="button" class="btn btn-danger">Xoá</button>
-           <table v-bind:style="{ marginTop: '30px'}" id="coquanlist" className="table table-striped">
-              <thead>
-                <tr>
-                  <th v-bind:style="{ width: '10%'}" className="w-checkbox">
-                    <input type="checkbox" />
-                  </th>
-                  <th v-bind:style="{ width: '40%' }"  className="w-stt">
-                    UserName
-                  </th>
-                  <th v-bind:style="{ width: '25%' }" className="w-stt">
-                    FullName
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                  <tr  v-for="item in listUsers" v-bind:key="item.id">
-                    <td  className="w-checkbox">
-                      <input type="checkbox" />
-                    </td>
-                    <td >
-                      {{item.email}}
-                    </td>
-                    <td >
-                      {{item.fullName}}
-                    </td>
-                  </tr>
-              </tbody>
-            </table>
+          </ul>-->
+          <button
+            v-bind:style="{ marginLeft: '30px'}"
+            type="button"
+            class="btn btn-danger"
+            @click="xoa"
+          >Xoá</button>
+          <table v-bind:style="{ marginTop: '30px'}" id="coquanlist" class="table table-striped">
+            <thead>
+              <tr>
+                <th v-bind:style="{ width: '10%'}" class="w-checkbox">
+                  <input type="checkbox" />
+                </th>
+                <th v-bind:style="{ width: '40%' }" class="w-stt">UserName</th>
+                <th v-bind:style="{ width: '25%' }" class="w-stt">FullName</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in listUsers" v-bind:key="item.id">
+                <td class="w-checkbox">
+                  <input type="checkbox" :value="item.id" @change="check($event)" :id="item.id" />
+                </td>
+                <td>{{item.email}}</td>
+                <td>{{item.fullName}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <!-- /.container-fluid -->
 
@@ -151,6 +148,7 @@ export default {
   data() {
     return {
       listUsers: [],
+      checked: []
     };
   },
   async created() {
@@ -158,17 +156,31 @@ export default {
     this.listUsers = this.$store.state.user;
   },
   methods: {
-    them(){
-      this.$router.push('/createpost')
+    them() {
+      this.$router.push("/createpost");
     },
-    place(){
-      this.$router.push('/admin')
+    place() {
+      this.$router.push("/admin");
     },
-    user(){
-      this.$router.push('/listuser')
+    user() {
+      this.$router.push("/listuser");
     },
-    post(){
-      this.$router.push('/listpost')
+    post() {
+      this.$router.push("/listpost");
+    },
+    async xoa() {
+      if (this.checked.length <= 0) {
+        alert("Vui lòng chọn user để xóa!");
+      } else if (confirm("Bạn có chắc muốn xóa user này?")) {
+        const res = await this.$store.dispatch("deleteuser", {
+          data: {ids:this.checked}
+        }).then(()=>{
+           alert("Xóa thành công !!");
+        });
+      }
+    },
+    check(event) {
+      this.checked.push(event.target.value);
     }
   }
 };

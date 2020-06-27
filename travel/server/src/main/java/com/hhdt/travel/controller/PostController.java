@@ -1,15 +1,8 @@
 package com.hhdt.travel.controller;
 
-import com.hhdt.travel.dto.PlaceDTO;
 import com.hhdt.travel.dto.PostDTO;
 import com.hhdt.travel.dto.PostOutputDTO;
-import com.hhdt.travel.entity.Place;
-import com.hhdt.travel.entity.Post;
-import com.hhdt.travel.entity.UserEntity;
-import com.hhdt.travel.mapper.PostMapper;
-import com.hhdt.travel.repository.PlaceRepository;
 import com.hhdt.travel.repository.PostRepository;
-import com.hhdt.travel.repository.UserRepository;
 import com.hhdt.travel.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +15,9 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private PostRepository postRepository;
+
     @PostMapping("/create")
     public PostDTO create(@RequestBody PostDTO postDTO)
     {
@@ -32,6 +28,16 @@ public class PostController {
     public List<PostOutputDTO> getAllPost()
     {
         return postService.getAllPost();
+    }
+
+    @DeleteMapping("/del")
+    public String delete(@RequestBody List<Long> ids)
+    {
+        for(long id : ids)
+        {
+            postRepository.deleteById(id);
+        }
+        return "xóa thành công";
     }
 
 }
