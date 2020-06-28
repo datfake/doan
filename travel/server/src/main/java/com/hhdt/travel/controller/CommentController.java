@@ -15,12 +15,14 @@ public class CommentController {
     private CommentService commentService;
 
     @PostMapping("/create")
+    @CrossOrigin(origins = { "*" })
     public CommentDTO create(@RequestBody CommentDTO commentDTO)
     {
         return commentService.create(commentDTO);
     }
 
     @GetMapping("/{id}")
+    @CrossOrigin(origins = { "*" })
     public List<CommentOutputDTO> getListCommentByIdPost(@PathVariable Long id)
     {
         return commentService.getListCommentByIdPost(id);

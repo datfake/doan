@@ -23,6 +23,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
     @GetMapping
+    @CrossOrigin(origins = { "*" })
     public List<UserDTO> getAllUsers()
     {
         List<UserEntity> userEntities = userService.getALlUsers();
@@ -34,8 +35,8 @@ public class UserController {
         return registerDTOS;
     }
 
-    @Secured("ROLE_ADMIN")
     @DeleteMapping("/del")
+    @CrossOrigin(origins = { "*" })
     public String delete(@RequestBody long[] ids)
     {
         for(long id : ids)

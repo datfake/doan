@@ -183,8 +183,10 @@ export default {
           .dispatch("deleteuser", {
             data: { ids: this.checked }
           })
-          .then(() => {
+          .then(async () => {
             alert("Xóa thành công !!");
+            await this.$store.dispatch("getAllUsers");
+            this.listUsers = this.$store.state.user;
           });
       }
     },

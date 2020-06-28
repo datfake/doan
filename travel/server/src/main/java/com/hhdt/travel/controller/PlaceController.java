@@ -35,12 +35,13 @@ public class PlaceController {
     private PlaceRepository placeRepository;
 
     @GetMapping
+    @CrossOrigin(origins = { "*" })
     public List<PlaceDTO>  getAllPlaces(){
         return placeService.getAllPlaces();
     }
 
-    @Secured("ROLE_ADMIN")
     @PostMapping("/uploadImage")
+    @CrossOrigin(origins = { "*" })
     public long uploadImage(@RequestBody MultipartFile file) throws IOException
     {
         Image image = new Image();

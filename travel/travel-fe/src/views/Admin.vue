@@ -184,8 +184,10 @@ export default {
           .dispatch("deleteplace", {
             data: { ids: this.checked }
           })
-          .then(() => {
+          .then(async () => {
             alert("Xóa thành công !!");
+            await this.$store.dispatch("getAllPlaces");
+            this.listPlaces = this.$store.state.places;
           });
       }
     },

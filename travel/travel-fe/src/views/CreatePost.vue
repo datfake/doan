@@ -209,6 +209,7 @@ export default {
           }
         })
         .then(result => {
+          this.$router.push("/admin");
           alert("them thanh cong");
         })
         .catch(err => {
