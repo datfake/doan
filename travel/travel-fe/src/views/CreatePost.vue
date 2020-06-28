@@ -28,7 +28,7 @@
             </a>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#">Chuyển Về Trang Chủ</a>
+            <a class="dropdown-item" href="#" @click="home">Chuyển Về Trang Chủ</a>
             <div class="dropdown-divider"></div>
             <a
               class="dropdown-item"
@@ -70,27 +70,51 @@
             <li class="item item-name">Tên</li>
             <li class="item item-add">Địa chỉ</li>
             <li class="item item-img">image</li>
-          </ul> -->
-            <label for="exampleFormControlInput1">Tên địa danh</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Tên" v-model="name">
-            <label for="exampleFormControlSelect1">Tỉnh, Thành Phố</label>
-            <select class="form-control" id="listProvice" @change="onChange()" v-model="selected">
-              <option v-for="option in listProvince" v-bind:value="option.id" :key="option.id">
-                {{ option.name }}
-              </option>
-            </select>
+          </ul>-->
+          <label for="exampleFormControlInput1">Tên địa danh</label>
+          <input
+            type="text"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="Tên"
+            v-model="name"
+          />
+          <label for="exampleFormControlSelect1">Tỉnh, Thành Phố</label>
+          <select class="form-control" id="listProvice" @change="onChange()" v-model="selected">
+            <option
+              v-for="option in listProvince"
+              v-bind:value="option.id"
+              :key="option.id"
+            >{{ option.name }}</option>
+          </select>
 
-            <label for="exampleFormControlInput1">Địa chỉ</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Địa chỉ" v-model="address">
+          <label for="exampleFormControlInput1">Địa chỉ</label>
+          <input
+            type="email"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="Địa chỉ"
+            v-model="address"
+          />
 
-            <label for="exampleFormControlTextarea1">Mô tả</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content" v-model="content"></textarea>
+          <label for="exampleFormControlTextarea1">Mô tả</label>
+          <textarea
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            name="content"
+            v-model="content"
+          ></textarea>
 
-
-            <label for="exampleFormControlFile1">Chèn Ảnh</label>
-            <input type="file" class="form-control-file" id="exampleFormControlFile1" @change="previewFiles">
-            <br/>
-            <button class="btn btn-dark" @click="luu()">Lưu</button>
+          <label for="exampleFormControlFile1">Chèn Ảnh</label>
+          <input
+            type="file"
+            class="form-control-file"
+            id="exampleFormControlFile1"
+            @change="previewFiles"
+          />
+          <br />
+          <button class="btn btn-dark" @click="luu()">Lưu</button>
         </div>
         <!-- /.container-fluid -->
 
@@ -127,7 +151,7 @@
           >Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a class="btn btn-primary" @click="logout">Logout</a>
           </div>
         </div>
       </div>
@@ -143,10 +167,10 @@ export default {
     return {
       listProvince: [],
       imgId: null,
-      province:'',
-      content:'',
-      name:'',
-      address:'',
+      province: "",
+      content: "",
+      name: "",
+      address: ""
     };
   },
   async created() {
@@ -156,39 +180,50 @@ export default {
   methods: {
     async previewFiles(event) {
       const formData = new FormData();
-    formData.append('file',event.target.files[0])
-    await this.$store.dispatch("saveImage", {
+      formData.append("file", event.target.files[0]);
+      await this.$store.dispatch("saveImage", {
         formData
       });
-    this.imgId = this.$store.state.saveimage;
-   },
-   onChange() {
-    this.province = this.selected;
-   },
-   luu() {
-     console.log(this.imgId);
-     this.$store.dispatch("savePlace", 
-     {place: {
-        idImage: this.imgId,
-        name: this.name,
-        address:this.address,
-        idProvince:this.province,
-        content: this.content
-      }}).then((result) => {
-          alert("them thanh cong")
+      this.imgId = this.$store.state.saveimage;
+    },
+    logout() {
+      this.$store.dispatch("auth/logout");
+      this.$router.push("/login");
+    },
+    onChange() {
+      this.province = this.selected;
+    },
+    home() {
+      this.$router.push("/");
+    },
+    luu() {
+      console.log(this.imgId);
+      this.$store
+        .dispatch("savePlace", {
+          place: {
+            idImage: this.imgId,
+            name: this.name,
+            address: this.address,
+            idProvince: this.province,
+            content: this.content
+          }
         })
-        .catch((err) => {
+        .then(result => {
+          this.$router.push("/admin");
+          alert("them thanh cong");
+        })
+        .catch(err => {
           alert(err);
         });
-   },
-    place(){
-      this.$router.push('/admin')
     },
-    user(){
-      this.$router.push('/listuser')
+    place() {
+      this.$router.push("/admin");
     },
-    post(){
-      this.$router.push('/listpost')
+    user() {
+      this.$router.push("/listuser");
+    },
+    post() {
+      this.$router.push("/listpost");
     }
   }
 };

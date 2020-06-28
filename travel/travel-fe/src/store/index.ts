@@ -44,15 +44,9 @@ export default new Vuex.Store({
   },
   actions: {
     async getAllPlaces({ commit }) {
-      await axios
-        .get("http://localhost:8022/api/place", {
-          headers: {
-            Authorization: "Bearer " + this.state.userToken.token,
-          },
-        })
-        .then((res) => {
-          commit("places", res.data);
-        });
+      await axios.get("http://localhost:8022/api/place").then((res) => {
+        commit("places", res.data);
+      });
     },
     async review({ commit }, { post }) {
       await axios
@@ -138,15 +132,9 @@ export default new Vuex.Store({
         });
     },
     async getAllPosts({ commit }) {
-      await axios
-        .get("http://localhost:8022/api/post", {
-          headers: {
-            Authorization: "Bearer " + this.state.userToken.token,
-          },
-        })
-        .then((res) => {
-          commit("posts", res.data);
-        });
+      await axios.get("http://localhost:8022/api/post").then((res) => {
+        commit("posts", res.data);
+      });
     },
     async getAllProvince({ commit }) {
       await axios

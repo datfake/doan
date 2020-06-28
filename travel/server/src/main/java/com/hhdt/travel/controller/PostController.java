@@ -19,18 +19,21 @@ public class PostController {
     private PostRepository postRepository;
 
     @PostMapping("/create")
+    @CrossOrigin(origins = { "*" })
     public PostDTO create(@RequestBody PostDTO postDTO)
     {
         return postService.create(postDTO);
     }
 
     @GetMapping
+    @CrossOrigin(origins = { "*" })
     public List<PostOutputDTO> getAllPost()
     {
         return postService.getAllPost();
     }
 
     @DeleteMapping("/del")
+    @CrossOrigin(origins = { "*" })
     public String delete(@RequestBody List<Long> ids)
     {
         for(long id : ids)

@@ -28,8 +28,7 @@
             </a>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#">Chuyển Về Trang Chủ</a>
-            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" @click="home">Chuyển Về Trang Chủ</a>
             <a
               class="dropdown-item"
               href="#"
@@ -136,7 +135,7 @@
           >Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a class="btn btn-primary" @click="logout">Logout</a>
           </div>
         </div>
       </div>
@@ -159,6 +158,13 @@ export default {
     this.listPosts = this.$store.state.posts;
   },
   methods: {
+     home() {
+      this.$router.push("/");
+    },
+     logout() {
+      this.$store.dispatch("auth/logout");
+      this.$router.push("/login");
+    },
     them() {
       this.$router.push("/createpost");
     },
@@ -181,6 +187,8 @@ export default {
            alert("Xóa thành công !!");
         });
       }
+    },check(event) {
+      this.checked.push(event.target.value);
     }
   }
 };

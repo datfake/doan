@@ -7,6 +7,7 @@ import com.hhdt.travel.mapper.UserMapper;
 import com.hhdt.travel.repository.UserRepository;
 import com.hhdt.travel.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
     @GetMapping
+    @CrossOrigin(origins = { "*" })
     public List<UserDTO> getAllUsers()
     {
         List<UserEntity> userEntities = userService.getALlUsers();
@@ -34,6 +36,7 @@ public class UserController {
     }
 
     @DeleteMapping("/del")
+    @CrossOrigin(origins = { "*" })
     public String delete(@RequestBody long[] ids)
     {
         for(long id : ids)

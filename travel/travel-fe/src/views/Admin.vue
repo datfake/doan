@@ -178,16 +178,21 @@ export default {
     },
     async xoa() {
       if (this.checked.length <= 0) {
-        alert("Vui lòng chọn chương để xóa!");
+        alert("Vui lòng chọn địa điểm để xóa!");
       } else if (confirm("Bạn có chắc muốn xóa địa điểm này?")) {
         const res = await this.$store
           .dispatch("deleteplace", {
             data: { ids: this.checked }
           })
-          .then(() => {
+          .then(async () => {
             alert("Xóa thành công !!");
+            await this.$store.dispatch("getAllPlaces");
+            this.listPlaces = this.$store.state.places;
           });
       }
+    },
+    check(event) {
+      this.checked.push(event.target.value);
     }
   }
 };

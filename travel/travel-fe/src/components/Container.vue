@@ -82,8 +82,7 @@
                   </div>
                   <p class="post-content">{{post.content}}</p>
                   <div class="img_post-content">
-                    <!-- <img v-bind:src="require('../assets/img/gallery/' + post.image)" alt /> -->
-                    <img v-bind:src="'data:image/jpeg;base64,'+post.image" />
+                    <img class="img_post-custom" v-bind:src="'data:image/jpeg;base64,'+post.image" />
                   </div>
                   <div class="post-commment">
                     <textarea name="comment" v-model="textComment" class="form-control" rows="2"></textarea>
@@ -153,29 +152,43 @@ export default {
       this.idPlace = this.selected.id;
     },
     review() {
-      this.$store.dispatch("review", {
-        post: {
-          content: this.content,
-          idUser: this.idUser,
-          idPlace: this.idPlace
-        }
-      });
+      this.$store
+        .dispatch("review", {
+          post: {
+            content: this.content,
+            idUser: this.idUser,
+            idPlace: this.idPlace
+          }
+        })
+        .then(async () => {
+          this.content = "";
+          await this.$store.dispatch("getAllPosts");
+          this.listPosts = this.$store.state.posts;
+        });
     },
     sendComment(value) {
-      this.$store.dispatch("comment", {
-        comment: {
-          content: this.textComment,
-          idUser: this.idUser,
-          idPost: value
-        }
-      }).then( response => ( this.$router.push("/admin")))
-       
+      this.$store
+        .dispatch("comment", {
+          comment: {
+            content: this.textComment,
+            idUser: this.idUser,
+            idPost: value
+          }
+        })
+        .then(async () => {
+          this.textComment = "";
+          await this.$store.dispatch("getAllPosts");
+          this.listPosts = this.$store.state.posts;
+        });
     }
   }
 };
 </script>
 
 <style scoped>
+.img_post-custom {
+  width: 60%;
+}
 .post-comments {
   margin-left: 12px;
 }
@@ -332,7 +345,6 @@ label.label.select-box1 {
   text-decoration: none;
 }
 
-
 .blue {
   background-color: #3498db;
   border-bottom: 5px solid #2980b9;
@@ -340,7 +352,7 @@ label.label.select-box1 {
 }
 
 button.btn-comment:hover {
-    background-color: #2417ea;
+  background-color: #2417ea;
 }
 
 .action-button:active {

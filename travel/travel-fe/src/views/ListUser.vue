@@ -28,7 +28,7 @@
             </a>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#">Chuyển Về Trang Chủ</a>
+            <a class="dropdown-item" href="#" @click="home">Chuyển Về Trang Chủ</a>
             <div class="dropdown-divider"></div>
             <a
               class="dropdown-item"
@@ -133,7 +133,7 @@
           >Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a class="btn btn-primary" @click="logout">Logout</a>
           </div>
         </div>
       </div>
@@ -156,6 +156,13 @@ export default {
     this.listUsers = this.$store.state.user;
   },
   methods: {
+    home() {
+      this.$router.push("/");
+    },
+    logout() {
+      this.$store.dispatch("auth/logout");
+      this.$router.push("/login");
+    },
     them() {
       this.$router.push("/createpost");
     },
@@ -172,11 +179,15 @@ export default {
       if (this.checked.length <= 0) {
         alert("Vui lòng chọn user để xóa!");
       } else if (confirm("Bạn có chắc muốn xóa user này?")) {
-        const res = await this.$store.dispatch("deleteuser", {
-          data: {ids:this.checked}
-        }).then(()=>{
-           alert("Xóa thành công !!");
-        });
+        const res = await this.$store
+          .dispatch("deleteuser", {
+            data: { ids: this.checked }
+          })
+          .then(async () => {
+            alert("Xóa thành công !!");
+            await this.$store.dispatch("getAllUsers");
+            this.listUsers = this.$store.state.user;
+          });
       }
     },
     check(event) {

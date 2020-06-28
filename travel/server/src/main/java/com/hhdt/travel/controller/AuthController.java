@@ -15,10 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -39,6 +36,7 @@ public class AuthController {
     private RoleRepository roleRepository;
 
     @PostMapping
+    @CrossOrigin(origins = { "*" })
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -54,6 +52,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
+    @CrossOrigin(origins = { "*" })
     public String register(@RequestBody RegisterDTO registerDTO) {
         if(userRepository.findByEmail(registerDTO.getEmail()).isPresent()) return null;
         else {
@@ -68,6 +67,7 @@ public class AuthController {
     }
 
     @PostMapping("/register-admin")
+    @CrossOrigin(origins = { "*" })
     public void registerAdmin(@RequestBody RegisterDTO registerDTO) {
         UserEntity user = new UserEntity(registerDTO.getEmail(), registerDTO.getFullName(), new BCryptPasswordEncoder().encode(registerDTO.getPassword()));
         Role role = roleRepository.findById(2);
